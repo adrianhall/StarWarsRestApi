@@ -13,40 +13,6 @@ enum Gender {
 }
 
 """
-A base interface for both Starship and Vehicle types.
-"""
-interface VehicleBase {
-  "The unique ID of the vehicle"
-  id: ID!
-  "The name of the vehicle"
-  name: String!
-  "The model of the vehicle"
-  model: String!
-  "The manufacturer of the vehicle"
-  manufacturer: String!
-  "The cost of the vehicle in galactic credits"
-  cost_in_credits: Int
-  "The length of the vehicle in meters"
-  length: Float
-  "The maximum speed of the vehicle within the atmosphere"
-  max_atmosphering_speed: Int
-  "The number of crew members required to operate the vehicle"
-  crew: Int
-  "The number of non-crew members the vehicle can hold"
-  passengers: Int
-  "The cargo capacity in kg"
-  cargo_capacity: Int
-  "The amount of time the vehicle can be operated without refueling"
-  consumables: String!
-  "The list of characters known to have been a pilot of this vehicle."
-  pilots: [Person]!
-  "The list of films that this vehicle was portrayed in."
-  films: [Film]!
-  "The URI to get the information"
-  uri: Uri
-} 
-
-"""
 Information about a film in the Star Wars Cinematic Universe
 """
 type Film {
@@ -179,7 +145,7 @@ type Species {
 """
 The starships of the Star Wars Cinematic Universe
 """
-type Starship implements VehicleBase  {
+type Starship {
   "The unique ID of the vehicle"
   id: ID!
   "The name of the vehicle"
@@ -220,7 +186,7 @@ type Starship implements VehicleBase  {
   mglt: Int
 }
 
-type Vehicle implements VehicleBase {
+type Vehicle {
   "The unique ID of the vehicle"
   id: ID!
   "The name of the vehicle"
