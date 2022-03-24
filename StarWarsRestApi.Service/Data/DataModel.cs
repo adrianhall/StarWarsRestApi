@@ -79,6 +79,7 @@ namespace StarWarsRestApi.Service.Data
                 foreach (int personId in PilotsForStarship(starshipId))
                 {
                     Starships[starshipId].Pilots.Add(People[personId]);
+                    People[personId].Starships.Add(Starships[starshipId]);
                 }
             }
 
@@ -87,6 +88,7 @@ namespace StarWarsRestApi.Service.Data
                 foreach (int personId in PilotsForVehicle(vehicleId))
                 {
                     Vehicles[vehicleId].Pilots.Add(People[personId]);
+                    People[personId].Vehicles.Add(Vehicles[vehicleId]);
                 }
             }
         }
