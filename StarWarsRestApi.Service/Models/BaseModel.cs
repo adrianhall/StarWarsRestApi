@@ -27,6 +27,12 @@ namespace StarWarsRestApi.Service.Models
         public int Id { get; set; }
 
         /// <summary>
+        /// The URI for this model.
+        /// </summary>
+        [JsonPropertyName("uri")]
+        public string Uri { get => GetUri(); set => throw new NotImplementedException(); }
+
+        /// <summary>
         /// The date/time that this record was created.
         /// </summary>
         [JsonPropertyName("created")]
