@@ -1,4 +1,5 @@
-﻿using System.Text.Json.Serialization;
+﻿using StarWarsRestApi.Service.Serialization;
+using System.Text.Json.Serialization;
 
 namespace StarWarsRestApi.Service.Models
 {
@@ -36,5 +37,12 @@ namespace StarWarsRestApi.Service.Models
         /// </summary>
         [JsonPropertyName("edited")]
         public DateTimeOffset Edited { get; set; } = DateTimeOffset.UtcNow;
+
+        /// <summary>
+        /// Gets the Uri for this object.
+        /// </summary>
+        /// <returns>The Uri for this object as a string.</returns>
+        public string GetUri()
+            => new Uri(AppUriHelper.AppUri, $"/{ModelType}/{Id}").ToString();
     }
 }

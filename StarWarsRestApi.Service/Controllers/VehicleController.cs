@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting.Server;
+using Microsoft.AspNetCore.Mvc;
 using StarWarsRestApi.Service.Data;
 using StarWarsRestApi.Service.Models;
+using StarWarsRestApi.Service.Serialization;
 
 namespace StarWarsRestApi.Service.Controllers
 {
@@ -13,8 +15,9 @@ namespace StarWarsRestApi.Service.Controllers
     {
         private readonly DataModel datamodel;
 
-        public VehicleController(DataModel datamodel)
+        public VehicleController(DataModel datamodel, IServer server)
         {
+            AppUriHelper.Initialize(server);
             this.datamodel = datamodel;
         }
 

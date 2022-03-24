@@ -2,22 +2,41 @@
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
+#pragma warning disable RCS1163 // Unused parameter.
+#pragma warning disable IDE0060 // Remove unused parameter
+
 namespace StarWarsRestApi.Service.Serialization
 {
+    public static class DataModelHelpers
+    {
+        public static void WriteBaseModelValue(this Utf8JsonWriter writer, BaseModel value, JsonSerializerOptions options)
+        {
+            writer.WriteStartObject();
+            writer.WritePropertyName("id");
+            writer.WriteNumberValue(value.Id);
+            writer.WritePropertyName("uri");
+            writer.WriteStringValue(value.GetUri());
+            writer.WriteEndObject();
+        }
+
+        public static void WriteBaseModelArray(this Utf8JsonWriter writer, IEnumerable<BaseModel> value, JsonSerializerOptions options)
+        {
+            writer.WriteStartArray();
+            foreach (var item in value)
+            {
+                writer.WriteBaseModelValue(item, options);
+            }
+            writer.WriteEndArray();
+        }
+    }
+
     public class FilmListConverter : JsonConverter<IList<Film>>
     {
         public override IList<Film>? Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, IList<Film> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var item in value)
-            {
-                writer.WriteStringValue($"/{item.ModelType}/{item.Id}");
-            }
-            writer.WriteEndArray();
-        }
+            => writer.WriteBaseModelArray(value, options);
     }
 
     public class PersonListConverter : JsonConverter<IList<Person>>
@@ -26,14 +45,7 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, IList<Person> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var item in value)
-            {
-                writer.WriteStringValue($"/{item.ModelType}/{item.Id}");
-            }
-            writer.WriteEndArray();
-        }
+            => writer.WriteBaseModelArray(value, options);
     }
 
     public class PlanetConverter : JsonConverter<Planet>
@@ -42,7 +54,7 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, Planet value, JsonSerializerOptions options)
-            => writer.WriteStringValue($"/{value.ModelType}/{value.Id}");
+            => writer.WriteBaseModelValue(value, options);
     }
 
     public class PlanetListConverter : JsonConverter<IList<Planet>>
@@ -51,14 +63,7 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, IList<Planet> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var item in value)
-            {
-                writer.WriteStringValue($"/{item.ModelType}/{item.Id}");
-            }
-            writer.WriteEndArray();
-        }
+            => writer.WriteBaseModelArray(value, options);
     }
 
     public class SpeciesConverter : JsonConverter<Species>
@@ -67,7 +72,7 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, Species value, JsonSerializerOptions options)
-            => writer.WriteStringValue($"/{value.ModelType}/{value.Id}");
+            => writer.WriteBaseModelValue(value, options);
     }
 
     public class SpeciesListConverter : JsonConverter<IList<Species>>
@@ -76,14 +81,7 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, IList<Species> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var item in value)
-            {
-                writer.WriteStringValue($"/{item.ModelType}/{item.Id}");
-            }
-            writer.WriteEndArray();
-        }
+            => writer.WriteBaseModelArray(value, options);
     }
 
     public class StarshipListConverter : JsonConverter<IList<Starship>>
@@ -92,14 +90,7 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, IList<Starship> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var item in value)
-            {
-                writer.WriteStringValue($"/{item.ModelType}/{item.Id}");
-            }
-            writer.WriteEndArray();
-        }
+            => writer.WriteBaseModelArray(value, options);
     }
 
     public class VehicleListConverter : JsonConverter<IList<Vehicle>>
@@ -108,13 +99,6 @@ namespace StarWarsRestApi.Service.Serialization
             => throw new NotImplementedException();
 
         public override void Write(Utf8JsonWriter writer, IList<Vehicle> value, JsonSerializerOptions options)
-        {
-            writer.WriteStartArray();
-            foreach (var item in value)
-            {
-                writer.WriteStringValue($"/{item.ModelType}/{item.Id}");
-            }
-            writer.WriteEndArray();
-        }
+            => writer.WriteBaseModelArray(value, options);
     }
 }

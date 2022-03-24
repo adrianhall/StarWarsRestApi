@@ -19,14 +19,17 @@ builder.Services.AddSwaggerGen();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-
+app.UseSwagger();
+app.UseSwaggerUI();
 app.UseHttpsRedirection();
 app.UseAuthorization();
 app.MapControllers();
+
+// Update the AppUriHelper.AppUri
+if (Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME") != null)
+{
+    AppUriHelper.AppUri = new Uri($"https://{Environment.GetEnvironmentVariable("WEBSITE_HOSTNAME")}");
+    AppUriHelper.IsInitialized = true;
+}
+
 app.Run();
