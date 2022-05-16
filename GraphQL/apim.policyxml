@@ -1,0 +1,1192 @@
+<policies>
+    <inbound>
+        <base />
+        <validate-graphql-request max-depth="3" />
+    </inbound>
+    <backend>
+        <set-graphql-resolver parent-type="Query" field="films">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>{{FilmResolverUrl}}</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="characters">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>{{PersonResolverUrl}}</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="planets">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>{{PlanetsResolverUrl}}</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="species">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>{{SpeciesResolverUrl}}</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="starships">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>{{StarshipResolverUrl}}</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="vehicles">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>{{VehicleResolverUrl}}</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="getCharacterById">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var body = context.Request.Body.As<JObject>(true);
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + body["variables"]["id"].ToString();
+                    }</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="getPlanetById">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var body = context.Request.Body.As<JObject>(true);
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + body["variables"]["id"].ToString();
+                    }</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="getSpeciesById">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var body = context.Request.Body.As<JObject>(true);
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + body["variables"]["id"].ToString();
+                    }</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="getStarshipById">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var body = context.Request.Body.As<JObject>(true);
+                        return "https://adhal-swapi.azurewebsites.net/api/starship/" + body["variables"]["id"].ToString();
+                    }</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Query" field="getVehicleById">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var body = context.Request.Body.As<JObject>(true);
+                        return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + body["variables"]["id"].ToString();
+                    }</set-url>
+                </http-request>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- BEGIN: Film resolvers -->
+        <set-graphql-resolver parent-type="Film" field="title">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.title}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="opening_crawl">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.opening_crawl}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="director">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.director}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="producer">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.producer}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="release_date">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.release_date}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="characters">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["characters"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="planets">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["planets"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="species">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["species"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="starships">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["starships"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Film" field="vehicles">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/film/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["vehicles"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- END: Film resolvers -->
+        <!-- BEGIN: Person resolvers -->
+        <set-graphql-resolver parent-type="Person" field="name">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.name}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="height">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.height}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="mass">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.mass}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="hair_color">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.hair_color}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="skin_color">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.skin_color}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="birth_year">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.birth_year}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="gender">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.gender}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="homeworld">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["homeworld"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="species">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["species"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="films">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["films"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="starships">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["starships"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Person" field="vehicles">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/person/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["vehicles"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- END: Person resolvers -->
+        <!-- BEGIN: Planet resolvers -->
+        <set-graphql-resolver parent-type="Planet" field="name">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.name}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="diameter">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.diameter}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="rotation_period">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.rotation_period}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="orbital_period">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.orbital_period}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="gravity">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.gravity}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="population">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.population}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="climate">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.climate}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="terrain">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.terrain}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="surface_water">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.surface_water}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="films">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["films"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Planet" field="residents">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/planet/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["residents"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- END: Planet resolvers -->
+        <!-- BEGIN: Species resolvers -->
+        <set-graphql-resolver parent-type="Species" field="name">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.name}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="classification">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.classification}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="designation">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.designation}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="average_height">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.average_height}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="average_lifespan">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.average_lifespan}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="hair_colors">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.hair_colors}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="skin_colors">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.skin_colors}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="eye_colors">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.eye_colors}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="language">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.language}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="homeworld">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["homeworld"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Species" field="films">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+                        var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+                        return "https://adhal-swapi.azurewebsites.net/api/species/" + id;
+                    }</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["films"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- END: Species resolvers -->
+        <!-- BEGIN: Starship resolvers -->
+        <set-graphql-resolver parent-type="Starship" field="name">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.name}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="model">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.model}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="manufacturer">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.manufacturer}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="cost_in_credits">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.cost_in_credits}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="length">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.length}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="max_atmosphering_speed">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.max_atmosphering_speed}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="crew">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.crew}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="passengers">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.passengers}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="cargo_capacity">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.cargo_capacity}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="consumables">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.consumables}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="pilots">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["pilots"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="films">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["films"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="starship_class">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.starship_class}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="hyperdrive_rating">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.hyperdrive_rating}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Starship" field="mglt">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/starship/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.mglt}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- END: Starship resolvers-->
+        <!-- BEGIN: Vehicle resolvers -->
+        <set-graphql-resolver parent-type="Vehicle" field="name">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.name}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="model">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.model}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="manufacturer">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.manufacturer}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="cost_in_credits">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.cost_in_credits}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="length">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.length}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="max_atmosphering_speed">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.max_atmosphering_speed}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="crew">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.crew}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="passengers">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.passengers}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="cargo_capacity">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.cargo_capacity}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="consumables">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.consumables}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="pilots">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["pilots"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="films">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body>@{
+                        var body = context.Response.Body.As<JObject>(true);
+                        return body["films"].ToString();
+                    }</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <set-graphql-resolver parent-type="Vehicle" field="vehicle_class">
+            <http-data-source>
+                <http-request>
+                    <set-method>GET</set-method>
+                    <set-url>@{
+					  var id = context.ParentResult.GetValue<JToken>()["id"].ToString();
+					  return "https://adhal-swapi.azurewebsites.net/api/vehicle/" + id;
+					}</set-url>
+                </http-request>
+                <http-response>
+                    <set-body template="liquid">{{body.vehicle_class}}</set-body>
+                </http-response>
+            </http-data-source>
+        </set-graphql-resolver>
+        <!-- END: Vehicle resolvers -->
+        <base />
+    </backend>
+    <outbound>
+        <base />
+    </outbound>
+    <on-error>
+        <base />
+    </on-error>
+</policies>
