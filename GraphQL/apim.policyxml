@@ -57,7 +57,7 @@
                 <http-request>
                     <set-method>GET</set-method>
                     <set-url>@{
-                        var id = context.Request.Body.As<JObject>(true)["id"];
+                        var id = context.Request.Body.As<JObject>(true)["arguments"]["id"];
                         return "https://swapi-rest.azurewebsites.net/api/person/" + id;
                     }</set-url>
                 </http-request>
@@ -68,7 +68,7 @@
                 <http-request>
                     <set-method>GET</set-method>
                     <set-url>@{
-                        var id = context.Request.Body.As<JObject>(true)["id"];
+                        var id = context.Request.Body.As<JObject>(true)["arguments"]["id"];
                         return "https://swapi-rest.azurewebsites.net/api/film/" + id;
                     }</set-url>
                 </http-request>
@@ -79,7 +79,7 @@
                 <http-request>
                     <set-method>GET</set-method>
                     <set-url>@{
-                        var id = context.Request.Body.As<JObject>(true)["id"];
+                        var id = context.Request.Body.As<JObject>(true)["arguments"]["id"];
                         return "https://swapi-rest.azurewebsites.net/api/planet/" + id;
                     }</set-url>
                 </http-request>
@@ -90,7 +90,7 @@
                 <http-request>
                     <set-method>GET</set-method>
                     <set-url>@{
-                        var id = context.Request.Body.As<JObject>(true)["id"];
+                        var id = context.Request.Body.As<JObject>(true)["arguments"]["id"];
                         return "https://swapi-rest.azurewebsites.net/api/species/" + id;
                     }</set-url>
                 </http-request>
@@ -101,7 +101,7 @@
                 <http-request>
                     <set-method>GET</set-method>
                     <set-url>@{
-                        var id = context.Request.Body.As<JObject>(true)["id"];
+                        var id = context.Request.Body.As<JObject>(true)["arguments"]["id"];
                         return "https://swapi-rest.azurewebsites.net/api/starship/" + id;
                     }</set-url>
                 </http-request>
@@ -112,7 +112,7 @@
                 <http-request>
                     <set-method>GET</set-method>
                     <set-url>@{
-                        var id = context.Request.Body.As<JObject>(true)["id"];
+                        var id = context.Request.Body.As<JObject>(true)["arguments"]["id"];
                         return "https://swapi-rest.azurewebsites.net/api/vehicle/" + id;
                     }</set-url>
                 </http-request>
